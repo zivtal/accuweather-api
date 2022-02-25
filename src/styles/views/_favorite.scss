@@ -1,0 +1,12 @@
+.favorite-conatiner {
+  gap: 16px;
+  list-style: none;
+  li {
+    cursor: pointer;
+    padding: 16px;
+    .city-name {
+      font-size: 1.25em;
+      font-weight: 700;
+    }
+  }
+}

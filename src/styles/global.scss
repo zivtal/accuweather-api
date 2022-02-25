@@ -1,0 +1,22 @@
+// Externals
+
+// Setup
+@import "setup/variables";
+@import "setup/functions";
+@import "setup/mixins";
+
+// Basics
+@import "basics/typography";
+@import "basics/base";
+@import "basics/helpers";
+@import "basics/layout";
+@import "basics/animations";
+
+// Views
+@import "views/home";
+@import "views/favorite";
+
+// Components
+@import "components/search";
+@import "components/loader";
+@import "components/header";

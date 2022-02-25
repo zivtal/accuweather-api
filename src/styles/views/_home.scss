@@ -1,0 +1,43 @@
+.temperature {
+  padding: 16px;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  .value {
+    font-size: 1.75em;
+    font-weight: 700;
+  }
+  .date,
+  .phrase {
+    font-size: 1.25em;
+  }
+}
+
+.location-info {
+  position: relative;
+  .favorite {
+    position: absolute;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    padding: 18px;
+    height: 64px;
+    width: 64px;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .days {
+    padding: 48px 0;
+    // display: flex;
+    gap: 20px;
+    // align-items: center;
+    // justify-content: center;
+    // flex-wrap: wrap;
+    .day {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+header {
+  .location-holder {
+    font-weight: 700;
+    font-size: 1.5em;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 0 16px;
+  }
+  nav {
+    ul {
+      display: flex;
+      list-style-type: none;
+      gap: 8px;
+      padding: 0 16px;
+    }
+  }
+}
