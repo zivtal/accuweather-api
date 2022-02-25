@@ -6,6 +6,10 @@ import router from './router'
 import store from './store'
 import './styles/global.scss'
 
+module.exports = {
+  publicPath: process.env.NODE_ENV === "production" ? "/interview-challenge-accuweather-api/" : "/",
+};
+
 Vue.use(require('vue-moment'));
 Vue.use(VueCookies);
 
