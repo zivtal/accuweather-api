@@ -1,7 +1,15 @@
 <template>
   <div class="container">
     <router-view />
+    <Footer />
   </div>
 </template>
 
-<style lang="scss"></style>
+<script>
+import Footer from "./components/Footer.vue";
+export default {
+  components: {
+    Footer,
+  },
+};
+</script>

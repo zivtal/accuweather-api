@@ -2,21 +2,16 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueCookies from 'vue-cookies';
 import { getCurrentPosition, getUserIp, loadFromStorage, saveToStorage } from '../service/util.service';
-import { httpService } from '../service/http.service';
+import { accuweatherService } from '../service/http.service';
 
 Vue.use(Vuex, VueCookies)
 
 export default new Vuex.Store({
   state: {
-    api: {
-      // key: "G8JO484eu7AGsERAutseLf78kWsBdrWj",
-      key: "1m14clLK2z3qgTKLx5xrSGp4Rc3JcfME",
-      lng: "en-en"
-    },
     favorite: loadFromStorage('save') || [],
     location: {
-      key: window.$cookies.get("locKey") || null,
-      name: window.$cookies.get("locName") || null,
+      key: window.$cookies.get("locKey") || "215854",
+      name: window.$cookies.get("locName") || "Tel Aviv",
       search: false,
     },
     ip: null,
@@ -95,21 +90,14 @@ export default new Vuex.Store({
     },
     async setCities({ state, commit }, { value }) {
       try {
-        const { api } = state;
         if (value) {
-          const results = await httpService.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${api.key}&language=${api.lng}&q=${value}`);
+          const results = await accuweatherService.cities(value);
           commit({ type: "setResults", results: results.data });
           return results;
         } else {
-          if (state.currentLocation) {
-            const { lat, lng } = state.currentLocation;
-            const results = await httpService.get(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${api.key}&q=${lat},${lng}&language=${api.lng}&details=false&toplevel=false`);
-            commit({ type: "setLocation", location: { key: results.data.Key, name: results.data.EnglishName } });
-          } else if (state.ip) {
-            const { ip } = state;
-            const results = await httpService.get(`http://dataservice.accuweather.com/locations/v1/cities/ipaddress?apikey=${api.key}&q=${ip}&language=${api.lng}&details=false`);
-            commit({ type: "setLocation", location: { key: results.data.Key, name: results.data.EnglishName } });
-          }
+          const { currentLocation, ip } = state;
+          const results = await accuweatherService.city(currentLocation, ip);
+          commit({ type: "setLocation", location: { key: results.data.Key, name: results.data.EnglishName } });
         }
       } catch (err) {
         console.log(err);
@@ -138,9 +126,8 @@ export default new Vuex.Store({
         await dispatch({ type: "setCurrentLocation" });
         await dispatch({ type: "setCities" });
       }
-      const { api, location } = state;
-      const hourData = await httpService.get(`https://dataservice.accuweather.com/forecasts/v1/hourly/1hour/${location.key}?apikey=${api.key}&language=${api.lng}&details=false&metric=true`);
-      const fiveDayData = await httpService.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${location.key}?apikey=${api.key}&language=${api.lng}&details=false&metric=true`);
+      const hourData = await accuweatherService.hour(state.location);
+      const fiveDayData = await accuweatherService.fiveDays(state.location);
       commit({ type: "setWeather", hourData: hourData.data[0], fiveDayData: fiveDayData.data });
       const favorite = state.favorite.map(fav => fav.id === location.key ? { ...fav, lastData: { updatedAt: Date.now(), hourData: hourData.data[0], fiveDayData: fiveDayData.data } } : fav);
       saveToStorage('save', favorite);
