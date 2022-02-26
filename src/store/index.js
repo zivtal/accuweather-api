@@ -22,7 +22,7 @@ export default new Vuex.Store({
       fiveDayData: null
     },
     results: null,
-    isCelsius: window.$cookies.get("isCelsius") === "true" || true
+    isCelsius: window.$cookies.get("isCelsius") !== "false"
   },
   getters: {
     getLocation(state) {
