@@ -1,6 +1,5 @@
 <template>
   <section>
-    <Header page="Home" :location="location.name" />
     <Search @set="(isShow) => (isSearch = isShow)" />
     <template v-if="!isSearch">
       <div v-if="weather.hourData && weather.fiveDayData" class="location-info">
@@ -50,14 +49,12 @@
 
 <script>
 import Loader from "../components/Loader.vue";
-import Header from "../components/Header.vue";
 import Search from "../components/Search.vue";
 import { cToF } from "../service/util.service";
 
 export default {
   name: "Home",
   components: {
-    Header,
     Loader,
     Search,
   },

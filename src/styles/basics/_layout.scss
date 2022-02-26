@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  min-height: calc(100vh - 52px - 64px);
   .fit-media,
   > :not(.full) {
     max-width: $normal-breakpoint;

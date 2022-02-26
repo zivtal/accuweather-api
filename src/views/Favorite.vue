@@ -1,6 +1,5 @@
 <template>
   <section>
-    <Header page="Favorite" />
     <ul class="favorite-conatiner flex auto-center wrap">
       <li
         class="flex auto-center column hover-box"
@@ -23,12 +22,10 @@
 </template>
 
 <script>
-import Header from "../components/Header";
 import { cToF } from "../service/util.service";
 const moment = require("moment");
 
 export default {
-  components: { Header },
   methods: {
     temperature(c) {
       return this.isCelsius ? c + "°C" : cToF(c) + "°F";

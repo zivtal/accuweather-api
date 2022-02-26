@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = 'FuZNz8V4pzeVChQs4OWeqTjCYAEOR4Sb';
+const API_KEY = 'boGLYLMoKnen6maJhN109G3hp5uVpyPe';
 const API_LANG = 'en-en';
 
 export const httpService = {
