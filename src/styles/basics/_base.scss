@@ -11,7 +11,6 @@ html {
 }
 
 body {
-  // direction: rtl;
   background-color: $clrwht;
   color: #222;
   margin: 0;
@@ -21,7 +20,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   &::-webkit-scrollbar {
-    // display: none;
     width: 6px;
   }
   &::-webkit-scrollbar-thumb {
@@ -103,50 +101,19 @@ button {
   }
 }
 
-button.more {
-  &::after {
-    content: "";
-    border: solid $clrwht;
-    border-width: 0 2px 2px 0;
-    display: inline-block;
-    top: calc(50% - 3px);
-    padding: 3px;
-    transform: rotate(-45deg);
-    position: absolute;
-    right: 12px;
-    opacity: 0;
-  }
-  &:focus,
-  &:hover {
-    padding-inline-end: 2em;
-    &::after {
-      opacity: 1;
-    }
-  }
+ul {
+  margin: 0;
+  padding: 16px 0;
 }
 
 input {
-  // outline-color: $clr2;
-  // border: 2px solid $clr4;
   border: 0;
   outline: none;
   height: 28px;
   padding: 0.5em;
   width: 100%;
-  // border-radius: $frmrad;
   transition: background-color 0.2s ease-in-out 0s,
     border-color 0.2s ease-in-out 0s;
-}
-
-textarea {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-a.active,
-a.my-active {
-  color: red;
 }
 
 ::-webkit-scrollbar {
