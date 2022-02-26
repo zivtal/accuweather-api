@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueCookies from 'vue-cookies';
 import { getCurrentPosition, loadFromStorage, saveToStorage } from '../service/util.service';
-import { accuweatherService, httpService } from '../service/http.service';
+import { httpService } from '../service/http.service';
+import { accuweatherService } from '../service/accuweather.service';
 
 Vue.use(Vuex, VueCookies)
 
