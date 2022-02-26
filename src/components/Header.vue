@@ -50,12 +50,11 @@ export default {
   methods: {
     toggleMode() {
       const body = document.querySelector("body");
+      this.isDarkMode = !this.isDarkMode;
       if (this.isDarkMode) {
-        this.isDarkMode = false;
-        body.classList.remove("dark");
-      } else {
-        this.isDarkMode = true;
         body.classList.add("dark");
+      } else {
+        body.classList.remove("dark");
       }
       this.$notify({
         type: "info",
