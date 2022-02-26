@@ -1,6 +1,6 @@
 import { httpService } from "./http.service";
 
-const API_KEY = 'boGLYLMoKnen6maJhN109G3hp5uVpyPe';
+const API_KEY = 'AbGOocZqkVlAfbNbgogXk6gAhg6tOywB';
 const API_LANG = 'en-en';
 
 export const accuweatherService = {
