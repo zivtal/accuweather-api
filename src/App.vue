@@ -3,7 +3,7 @@
     <Header />
     <div class="container">
       <router-view />
-      <notifications classes="message" position="left bottom" />
+      <notifications classes="message shadow" position="left bottom" />
     </div>
     <Footer />
   </section>
