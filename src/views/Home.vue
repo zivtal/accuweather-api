@@ -3,10 +3,7 @@
     <Search @set="(isShow) => (isSearch = isShow)" />
     <template v-if="!isSearch">
       <div v-if="weather.hourData && weather.fiveDayData" class="location-info">
-        <div
-          class="favorite flex auto-center"
-          @click="$store.dispatch({ type: 'setFavorite' })"
-        >
+        <div class="favorite flex auto-center" @click="toggleFavorite">
           <img
             v-if="!isFavorite"
             class="bwicon"
@@ -64,11 +61,28 @@ export default {
     };
   },
   async mounted() {
-    await this.$store.dispatch({ type: "setWeather" });
+    try {
+      await this.$store.dispatch({ type: "setWeather" });
+      this.$notify({
+        type: "info",
+        text: `${this.location.name}'s forecast loaded`,
+      });
+    } catch (err) {
+      this.$notify({ type: "error", text: err });
+    }
   },
   methods: {
     temperature(c) {
       return this.isCelsius ? c + "°C" : cToF(c) + "°F";
+    },
+    toggleFavorite() {
+      this.$store.dispatch({ type: "setFavorite" });
+      this.$notify({
+        type: "info",
+        text: `${this.location.name} has been ${
+          this.isFavorite ? "added to" : "removed from"
+        } favorite.`,
+      });
     },
   },
   computed: {

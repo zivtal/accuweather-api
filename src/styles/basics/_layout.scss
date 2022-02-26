@@ -54,3 +54,14 @@
     }
   }
 }
+
+.message {
+  margin: 42px 42px;
+  padding: 10px 10px;
+  border-radius: 5px;
+  text-align: center;
+  width: auto;
+  color: white;
+  background: $clr1;
+  border-left: 3px solid $clr1;
+}

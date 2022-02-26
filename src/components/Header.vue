@@ -16,7 +16,7 @@
     </div>
     <nav>
       <ul>
-        <li @click="$store.dispatch({ type: 'toggleCelsius' })">
+        <li @click="toggleTemp">
           <img v-if="!isCelsius" src="../assets/icon/celsius.svg" />
           <img v-else src="../assets/icon/fahrenheit.svg" />
         </li>
@@ -57,7 +57,18 @@ export default {
         this.isDarkMode = true;
         body.classList.add("dark");
       }
+      this.$notify({
+        type: "info",
+        text: `${this.isDarkMode ? "Dark" : "Light"} mode`,
+      });
       window.$cookies.set("isDark", this.isDarkMode);
+    },
+    toggleTemp() {
+      this.$notify({
+        type: "info",
+        text: `Temperature unit: ${this.isCelsius ? "fahrenheit" : "celsius"}`,
+      });
+      this.$store.dispatch({ type: "toggleCelsius" });
     },
   },
   computed: {

@@ -73,7 +73,7 @@ export default new Vuex.Store({
           const client = await httpService.getClientInfo();
           commit({ type: 'setCurrentLocation', location: { lat: client.latitude, lng: client.longitude }, ip: client?.ip });
         } catch (err) {
-          console.log(err);
+          throw new Error(err);
         }
       }
     },
@@ -89,7 +89,7 @@ export default new Vuex.Store({
           commit({ type: "setLocation", location: { key: results.data.Key, name: results.data.EnglishName } });
         }
       } catch (err) {
-        console.log(err);
+        throw new Error(err);
       }
     },
     setLocation({ commit }, { location }) {
@@ -124,7 +124,7 @@ export default new Vuex.Store({
         saveToStorage('save', favorite);
         commit({ type: "setFavorite", favorite });
       } catch (err) {
-        console.log(err);
+        throw new Error(`Network error`);
       }
     },
     toggleCelsius({ state, commit }) {
