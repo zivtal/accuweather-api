@@ -29,7 +29,7 @@
             </p>
             <p class="date">
               {{
-                new Date(day.EpochDate * 1000).toLocaleString("en-US", {
+                new Date(day.EpochDate * 1000).toLocaleString("he-IL", {
                   day: "2-digit",
                   year: "2-digit",
                   month: "2-digit",
