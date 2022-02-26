@@ -66,7 +66,7 @@ export default {
     toggleTemp() {
       this.$notify({
         type: "info",
-        text: `Temperature unit: ${this.isCelsius ? "fahrenheit" : "celsius"}`,
+        text: `Unit: ${this.isCelsius ? "Fahrenheit" : "Celsius"}`,
       });
       this.$store.dispatch({ type: "toggleCelsius" });
     },
