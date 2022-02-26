@@ -1,8 +1,10 @@
 <template>
-  <div class="container">
-    <router-view />
+  <section>
+    <div class="container">
+      <router-view />
+    </div>
     <Footer />
-  </div>
+  </section>
 </template>
 
 <script>

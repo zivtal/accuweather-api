@@ -1,12 +1,18 @@
 .search-conatiner {
   position: relative;
-  .search-input-holder {
-    display: flex;
-    justify-content: center;
+  .search-input {
+    background-color: white;
+    gap: 10px;
     width: 100%;
-    padding: 0 16px;
+    padding: 8px 8px;
     max-width: 600px;
+    border-radius: $frmrad;
     margin: 0 auto;
+    img {
+      height: 24px;
+      width: 24px;
+      opacity: 0.5;
+    }
   }
   .search-result-holder {
     margin: 0 auto;

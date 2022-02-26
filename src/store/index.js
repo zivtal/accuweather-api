@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueCookies from 'vue-cookies';
-import { getCurrentPosition, getUserIp, loadFromStorage, saveToStorage } from '../service/util.service';
-import { accuweatherService } from '../service/http.service';
+import { getCurrentPosition, loadFromStorage, saveToStorage } from '../service/util.service';
+import { accuweatherService, httpService } from '../service/http.service';
 
 Vue.use(Vuex, VueCookies)
 
@@ -21,15 +21,9 @@ export default new Vuex.Store({
       fiveDayData: null
     },
     results: null,
-    isCelsius: window.$cookies.get("isCelsius") || true
+    isCelsius: window.$cookies.get("isCelsius") === "true" || true
   },
   getters: {
-    getIp(state) {
-      return state.ip;
-    },
-    getCurrentLocation(state) {
-      return state.currentLocation;
-    },
     getLocation(state) {
       return state.location;
     },
@@ -47,10 +41,8 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setIp(state, { ip }) {
+    setCurrentLocation(state, { location, ip }) {
       state.ip = ip;
-    },
-    setCurrentLocation(state, { location }) {
       state.currentLocation = location;
     },
     setResults(state, { results }) {
@@ -70,22 +62,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async setIp({ commit }) {
-      try {
-        const ip = await getUserIp();
-        commit({ type: 'setIp', ip });
-        return ip;
-      } catch (err) {
-        console.log(err);
-      }
-    },
     async setCurrentLocation({ commit }) {
       try {
         const location = await getCurrentPosition();
         commit({ type: 'setCurrentLocation', location });
         return location;
       } catch (err) {
-        console.log(err);
+        try {
+          const client = await httpService.getClientInfo();
+          commit({ type: 'setCurrentLocation', location: { lat: client.latitude, lng: client.longitude }, ip: client?.ip });
+        } catch (err) {
+          console.log(err);
+        }
       }
     },
     async setCities({ state, commit }, { value }) {
@@ -120,18 +108,23 @@ export default new Vuex.Store({
       commit({ type: "setFavorite", favorite });
     },
     async setWeather({ state, commit, dispatch }) {
-      commit({ type: "setWeather", hourData: null, fiveDayData: null });
-      if (!state.location.search) {
-        await dispatch({ type: "setIp" });
-        await dispatch({ type: "setCurrentLocation" });
-        await dispatch({ type: "setCities" });
+      try {
+        commit({ type: "setWeather", hourData: null, fiveDayData: null });
+        if (!state.location.search) {
+          await dispatch({ type: "setCurrentLocation" });
+          await dispatch({ type: "setCities" });
+        }
+        const hourData = await accuweatherService.hour(state.location);
+        const fiveDayData = await accuweatherService.fiveDays(state.location);
+        window.$cookies.set("locKey", state.location.key);
+        window.$cookies.set("locName", state.location.name);
+        commit({ type: "setWeather", hourData: hourData.data[0], fiveDayData: fiveDayData.data });
+        const favorite = state.favorite.map(fav => fav.id === state.location.key ? { ...fav, lastData: { updatedAt: Date.now(), hourData: hourData.data[0], fiveDayData: fiveDayData.data } } : fav);
+        saveToStorage('save', favorite);
+        commit({ type: "setFavorite", favorite });
+      } catch (err) {
+        console.log(err);
       }
-      const hourData = await accuweatherService.hour(state.location);
-      const fiveDayData = await accuweatherService.fiveDays(state.location);
-      commit({ type: "setWeather", hourData: hourData.data[0], fiveDayData: fiveDayData.data });
-      const favorite = state.favorite.map(fav => fav.id === location.key ? { ...fav, lastData: { updatedAt: Date.now(), hourData: hourData.data[0], fiveDayData: fiveDayData.data } } : fav);
-      saveToStorage('save', favorite);
-      commit({ type: "setFavorite", favorite });
     },
     toggleCelsius({ state, commit }) {
       window.$cookies.set('isCelsius', !state.isCelsius);

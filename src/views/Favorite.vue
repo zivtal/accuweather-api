@@ -41,8 +41,6 @@ export default {
         type: "setLocation",
         location: { name, key, search: true },
       });
-      window.$cookies.set("locKey", location.key);
-      window.$cookies.set("locName", location.name);
       this.$router.push("/");
       await this.$store.dispatch({ type: "setWeather" });
     },

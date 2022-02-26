@@ -6,14 +6,13 @@
         @click="() => $store.dispatch({ type: 'setCities' })"
       />
       <a
-        v-if="location"
+        v-if="title === location"
         :href="'https://www.google.com/maps/place/' + location"
-        rel="noopener noreferrer"
         target="_blank"
         class="location"
         v-text="location"
       ></a>
-      <router-link class="location" v-else to="/" v-text="page"></router-link>
+      <router-link class="location" v-else to="/" v-text="title"></router-link>
     </div>
     <nav>
       <ul>
@@ -22,11 +21,11 @@
           <img v-else src="../assets/icon/fahrenheit.svg" />
         </li>
         <li>
-          <a href="#" @click="changeMode">
+          <a href="#" @click="toggleMode">
             <img src="../assets/icon/dark-mode.svg" />
           </a>
         </li>
-        <li v-if="page !== 'Home'">
+        <li v-if="$route.name !== 'Home'">
           <router-link to="/">
             <img src="../assets/icon/home.svg" />
           </router-link>
@@ -43,47 +42,43 @@
 
 <script>
 export default {
-  props: {
-    page: null,
-    location: null,
-  },
   data() {
     return {
       isDarkMode: false,
     };
   },
   methods: {
-    changeMode() {
+    toggleMode() {
       const body = document.querySelector("body");
       if (this.isDarkMode) {
         this.isDarkMode = false;
         body.classList.remove("dark");
-        window.$cookies.set("theme", "default");
       } else {
         this.isDarkMode = true;
         body.classList.add("dark");
-        window.$cookies.set("theme", "dark");
       }
+      window.$cookies.set("isDark", this.isDarkMode);
     },
   },
   computed: {
+    location() {
+      return this.$store.getters.getLocation?.name;
+    },
+    title() {
+      const page = this.$route.name;
+      return page === "Home" && this.location ? this.location : page;
+    },
     isCelsius() {
       return this.$store.getters.getIsCelsius;
     },
   },
   mounted() {
     const body = document.querySelector("body");
-    const mode = window.$cookies.get("theme");
-    if (mode) {
-      if (mode === "default") {
-        this.isDarkMode = false;
-        body.classList.remove("dark");
-      } else {
-        this.isDarkMode = true;
-        body.classList.add("dark");
-      }
+    this.isDarkMode = window.$cookies.get("isDark") === "true" || false;
+    if (this.isDarkMode) {
+      body.classList.add("dark");
     } else {
-      window.$cookies.set("theme", "default");
+      body.classList.remove("dark");
     }
   },
 };

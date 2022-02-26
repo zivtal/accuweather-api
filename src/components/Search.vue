@@ -1,13 +1,10 @@
 <template>
   <section class="search-conatiner">
-    <div class="search-input-holder" :class="{ focus: inputFocus }">
+    <div class="search-input flex auto-center">
+      <img src="../assets/icon/search.svg" />
       <input
-        @focus="inputFocus = true"
-        @blur="inputFocus = false"
         autocomplete="off"
         type="text"
-        id="search"
-        class="search-input"
         placeholder="Search Location"
         v-model="value"
       />
@@ -21,7 +18,7 @@
         v-for="(search, index) in results"
         :key="index"
         class="search-result"
-        v-on:click="setLocation(search)"
+        @click="setLocation(search)"
       >
         {{ search.LocalizedName }} / {{ search.Country.LocalizedName }}
       </button>
@@ -37,7 +34,6 @@ export default {
     return {
       isShow: false,
       value: null,
-      inputFocus: false,
     };
   },
   methods: {
@@ -49,8 +45,6 @@ export default {
         search: true,
       };
       this.$store.dispatch({ type: "setLocation", location });
-      window.$cookies.set("locKey", location.key);
-      window.$cookies.set("locName", location.name);
       await this.$store.dispatch({ type: "setWeather" });
     },
   },

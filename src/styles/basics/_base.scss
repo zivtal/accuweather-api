@@ -126,12 +126,14 @@ button.more {
 }
 
 input {
-  outline-color: $clr2;
-  border: 2px solid $clr4;
+  // outline-color: $clr2;
+  // border: 2px solid $clr4;
+  border: 0;
+  outline: none;
   height: 28px;
   padding: 0.5em;
   width: 100%;
-  border-radius: $frmrad;
+  // border-radius: $frmrad;
   transition: background-color 0.2s ease-in-out 0s,
     border-color 0.2s ease-in-out 0s;
 }

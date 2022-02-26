@@ -8,7 +8,12 @@
           class="favorite flex auto-center"
           @click="$store.dispatch({ type: 'setFavorite' })"
         >
-          <img v-if="!isFavorite" src="../assets/icon/like.svg" alt="" />
+          <img
+            v-if="!isFavorite"
+            class="bwicon"
+            src="../assets/icon/like.svg"
+            alt=""
+          />
           <img v-else src="../assets/icon/ilike.svg" alt="" />
         </div>
         <div class="temperature flex column auto-center">

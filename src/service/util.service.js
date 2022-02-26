@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export function saveToStorage(key, val) {
     localStorage.setItem(key, JSON.stringify(val));
 }
@@ -34,14 +32,5 @@ export async function getCurrentPosition() {
         return { lat: geolocation.coords.latitude, lng: geolocation.coords.longitude };
     } catch (err) {
         throw new Error(`can't load location`);
-    }
-}
-
-export async function getUserIp() {
-    try {
-        const ipify = await axios.get("https://api.ipify.org?format=json");
-        return ipify?.data.ip;
-    } catch (err) {
-        throw new Error(`can't get user ip address`);
     }
 }
