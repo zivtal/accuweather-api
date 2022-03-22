@@ -1,5 +1,5 @@
 ## OVERVIEW
-Write a simple, responsive, web app in Vue(version 2 or 3) that shows the weather of some city. The user should be able to search for a city and save it to favorites (locally, a server is not required). We expect to see 2 pages in this app. (weather page and favorites page).
+Write a simple, responsive, web app in Vue2 that shows the weather of some city. The user should be able to search for a city and save it to favorites (locally, a server is not required). We expect to see 2 pages in this app. (weather page and favorites page).
 
 ## API
 The API that you’ll use for this app is [AccuWeather API](https://developer.accuweather.com/). Please signup and create a new app in order to get an API key. You will use 3 endpoints: [location autocomplete](https://developer.accuweather.com/accuweather-locations-api/apis/get/locations/v1/cities/autocomplete) for the search field, [get current weather](https://developer.accuweather.com/accuweather-current-conditions-api/apis/get/currentconditions/v1/%7BlocationKey%7D) and [5-day daily forecast](https://developer.accuweather.com/accuweather-forecast-api/apis/get/forecasts/v1/daily/5day/%7BlocationKey%7D).
