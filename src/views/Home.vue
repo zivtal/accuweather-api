@@ -28,13 +28,7 @@
               {{ temperature(day.Temperature.Maximum.Value) }}
             </p>
             <p class="date">
-              {{
-                new Date(day.EpochDate * 1000).toLocaleString("he-IL", {
-                  day: "2-digit",
-                  year: "2-digit",
-                  month: "2-digit",
-                })
-              }}
+              {{ weatherDate(day.EpochDate) }}
             </p>
           </div>
         </div>
@@ -48,6 +42,7 @@
 import Loader from "../components/Loader.vue";
 import Search from "../components/Search.vue";
 import { cToF } from "../service/util.service";
+import moment from "moment";
 
 export default {
   name: "Home",
@@ -74,6 +69,9 @@ export default {
   methods: {
     temperature(c) {
       return this.isCelsius ? c + "°C" : cToF(c) + "°F";
+    },
+    weatherDate(date) {
+      return moment(date * 1000).format("DD/MM/YY");
     },
     toggleFavorite() {
       this.$store.dispatch({ type: "setFavorite" });

@@ -1,10 +1,7 @@
 <template>
   <header>
     <div class="location-holder">
-      <img
-        src="../assets/icon/location.svg"
-        @click="() => $store.dispatch({ type: 'setCities' })"
-      />
+      <img src="../assets/icon/location.svg" />
       <a
         v-if="title === location"
         :href="'https://www.google.com/maps/place/' + location"
