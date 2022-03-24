@@ -11,6 +11,6 @@ cd dist
 git init
 git add -A
 git commit -m 'New Deployment'
-git push -f git@github.com:zivtal/interview-challenge-accuweather-api.git master:gh-pages
+git push -f git@github.com:zivtal/accuweather-api.git master:gh-pages
 
 cd -
